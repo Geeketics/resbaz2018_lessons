@@ -1,0 +1,12 @@
+---
+title: "Intro to Webscraping"
+date: "6 February 2018"
+output: html_document
+---
+
+
+Intro content from https://data-lessons.github.io/library-webscraping/ but modified to be in R
+
+## What is web scraping?
+
+
