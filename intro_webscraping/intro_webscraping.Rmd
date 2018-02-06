@@ -10,3 +10,90 @@ Intro content from https://data-lessons.github.io/library-webscraping/ but modif
 ## What is web scraping?
 
 
+Pull data from website, often unstructured
+
+aims to transform specific content in website into structured form 
+
+
+
+## Applications
+
+- tracking trends in real estate market
+- collect online article comments for analysis (using text mining)
+- collecting archives of reports from many web pages
+
+## Not web scraping
+
+- data downloads
+- semantic web knowledge bases (OWL)
+- microformats
+
+## Things to check
+
+- check copy paste
+    - excel/google sheets
+- check for an API
+- large requests could use Freedom of information act request
+
+## Example: a database of UN Security Council Resolutions
+
+http://www.un.org/en/sc/documents/resolutions/
+
+## Task
+
+Our task is to merge the data from all the UNSC resolution pages into a single, consistent and machine-readable format that will allow us to:
+
+- count and plot how many resolutions were passed each year
+- count and plot how many pertained UN membership vs. security motions
+- search for resolutions pertaining to particular countries’ names
+- divide the statistics by geopolitical region (e.g. South America vs. East Asia)
+- periodically update our database as long as the web site maintains its current format
+
+
+## Matching patterns
+
+- regular expression
+- XPath
+- CSS selectors
+
+## Markup languages
+
+- XML
+- HTML
+
+## Structure of marked-up document
+
+XML syntax rules
+
+- XML structured using nodes
+    - element nodes
+    - attribute nodes
+    - text nodes
+- XML element nodes must have open and close tag
+- XML tag names are case sensitive
+- can have nested child elements
+- XML attribute nodes have a name, and value that must be quoted
+
+HTML has relaxed rules
+
+- tag and attribute names are case insensitive
+- some elements are closed automatically (e.g. <img>)
+- attribute values fo not need to be quoted
+
+##  Common HTML tags
+
+tag name | What it is used for
+--- | ---
+p | a paragraph of text
+h1 | top level heading
+h2, h3, ... | lower-level heading
+li | list item
+img | an image
+tr | table row
+td | table cell
+a | a link
+div | a block of space on the page (generic)
+span | a portion of text on the page (generic)
+meta | information about the page that is not shown
+
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element has a full list
