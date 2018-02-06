@@ -1,0 +1,111 @@
+---
+title: "SWC - R"
+date: "6 February 2018"
+output: html_document
+---
+
+Simplfied version of http://swcarpentry.github.io/r-novice-gapminder/
+
+## Introduction to R and Rstudio
+
+key points:
+
+- Rstudio panels
+- using R as calculator
+- comparing things
+- variables and assignment
+  - valid names
+- rm()
+- install.packages()
+    - ggplot2, dplyr, gapminder
+
+## Projects
+
+Create project and setup dirs
+
+- src
+- data
+- docs
+- results
+
+Download data from https://raw.githubusercontent.com/resbaz/r-novice-gapminder-files/master/data/gapminder-FiveYearData.csv into data
+
+## Seeking help
+
+- help()
+    - quick explain of results
+- ?? for fuzzy searching
+- google
+- stack overflow
+
+## Exploring dataframes
+
+- read.csv()
+    - header = TRUE
+    - stringsAsFactors = FALSE
+    - sep = ',' or '\t'
+
+Viewing
+
+- class()
+- str()
+- dim()
+    - nrow()
+    - ncol()
+- View()
+- head()
+- names()
+    - colnames()
+
+
+## ggplot2
+
+Introduce idea of mapping data to aesthetics and representing the data with geoms
+
+- library("ggplot2")
+- ggplot()
+- aes()
+- geoms
+    - geom_point()
+    - geom_line()
+- facets
+    - facet_wrap()
+  
+## Dataframe manipulation
+
+- library("dplyr")
+- select()
+- %>% 
+- filter()
+- group_by()
+- summarise()
+- mutate()
+
+show dplyr being piped into ggplot
+
+## Writing data
+
+- ggave
+- write.table
+    - tsv
+    - csv
+
+## Functions
+
+```
+my_function <- function(){ 
+
+}
+```
+
+- arguments
+- return
+- stopifnot
+- combining functions
+
+## control flow
+
+- if
+    - if else
+- ifelse
+- for
