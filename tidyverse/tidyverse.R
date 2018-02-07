@@ -52,12 +52,12 @@ starwars %>% mutate(height_m = height / 100) %>% select(height_m, everything())
 
 starwars %>% summarise(mean_height  = mean(height, na.rm = TRUE))
 
-starwars %>% select(height, mass) %>% summarise_each(., funs(mean(., na.rm = TRUE)))
+starwars %>% select(height, mass) %>% summarise_all(., funs(mean(., na.rm = TRUE)))
 
-starwars %>% select(height, mass) %>% mutate_each(., funs( . / 2))
+starwars %>% select(height, mass) %>% mutate_all(., funs( . / 2))
 
 div_two <- function(x){
   x /2
 }
 
-starwars %>% select(height, mass) %>% mutate_each(., funs( div_two))
+starwars %>% select(height, mass) %>% mutate_all(., funs( div_two))
