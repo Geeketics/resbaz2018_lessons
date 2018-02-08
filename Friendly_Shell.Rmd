@@ -125,11 +125,17 @@ Instead, we can use the `~/MyTools/bin` folder to keep all the actual programs /
 
 To do this we make symbolic links to our programs / tools that are saved in their own folders:
 
+
 ```{bash symbolic_link}
 
 ln -s ~/MyTools/PLINK/plink ~/MyTools/bin/plink
 
 ```
+
+The main thing to remember when making a symbolic link is that you *must* use the full filepath to your original program / tool, if you do not do this you will get a link that only works if you are in the folder you made the link inside:
+
+eg. `ln -s MyTools/PLINK/plink MyTools/bin/plink` will make a link that will work in your home folder, but if you move somewhere else ( `cd MyTools` ) and try to use the symbolic link your computer will try to find a file that does not exist
+(in `MyTools/MyTools/PLINK/plink`) because it will add your current filepath to the start of the link filepath and you will get a 'command not found error.' This can be avoided by using the full filepath, which will make your computer search for the linked program / tool in the right place every time.
 
 This link also doesn't have to be named the same thing as the program, eg:
 
