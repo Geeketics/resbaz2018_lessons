@@ -34,7 +34,6 @@ Here are a few links that you can download some example programs / tools from:
 
   + PLINK: https://www.cog-genomics.org/plink2
   + PAML: http://abacus.gene.ucl.ac.uk/software/paml.html#download
-  + Samtools: http://www.htslib.org/download/
 
 
 #### Step 3: Make the tool accesible from anywhere
@@ -74,6 +73,7 @@ But if we specify the filepath they are in, they will work.
 ```
 
 How can we make these programs / tools work without having to specify the filepath? (Just like when we use `ls` , `head` , `cat`, etc.)
+
 
 #### Step 4: Make programs / tools accesible
 
@@ -161,6 +161,7 @@ ln -s ~/.bashrc ~/.bash_profile
 
 ### Other cool .bashrc commands / options
 
+
 #### Change automatic prompt symbol
 
 ```{bash prompt_command}
@@ -171,6 +172,7 @@ export PROMPT_COMMAND='if [ "$(id -u)" -ne 0 ];
   fi'
 
 ```
+
 
 #### Save every command you run into a .log file
 
@@ -198,3 +200,32 @@ echo 'set completion-ignore-case On' >> ~/.inputrc
 ```
 
 
+#### How to make PAML work (for Mac's)
+
+PAML set-up on Windows will be the same as it was for plink. For Mac's there are a few extra steps:
+
+```{bash PAML_setup}
+
+tar xzf paml4.9g.tgz
+
+cd paml4.9g
+
+## remove windows executables
+rm bin/*.exe
+
+## make Mac executables & move to bin folder
+cd src
+make -f Makefile
+mv baseml basemlg codeml pamp evolver yn00 chi2 ../bin
+
+## make all programs accesible (all at once with a loop)
+
+for program in bin/*;
+  do
+    program_name=$(basename $program)
+    ln -s ~/MyTools/paml4.9g/bin/${program} ~/MyTools/bin/${program}
+  done
+
+ls ~/MyTools/bin
+
+```
