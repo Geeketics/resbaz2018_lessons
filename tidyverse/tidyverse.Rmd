@@ -1,0 +1,123 @@
+---
+title: "Tidyverse"
+author: "Murray Cadzow"
+date: "7 February 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+##
+
+```{r, fig.align='center'}
+knitr::include_graphics("images/hex-tidyverse.png")
+```
+
+## Tidyverse components
+
+- dplyr
+- ggplot2
+- tidyr
+- readr
+- purrr
+- tibble
+
+## Package load
+
+```{r, echo = TRUE}
+#install.packages(tidyverse)
+library(tidyverse)
+```
+
+## dataset
+
+
+```{r}
+data("starwars") # comes from dplyr
+head(starwars)
+```
+
+## dplyr
+
+```{r}
+
+```
+
+## dplyr: key players
+
+```{r, eval = FALSE, echo = TRUE}
+%>% # pipe
+select() # columns
+filter() or slice() # rows
+group_by() or ungroup() # create/remove groups
+summarise() # summarise data 
+mutate() # new column, keep all
+transmute() # new column, drop old
+```
+
+## Functional versions
+
+summarise and mutate
+
+suffixes
+
+- <verb>_all()
+- <verb>_at()
+- <verb>_if()
+
+
+## _all()
+
+apply function(s) to all columns of dataframe
+
+- mutate_all(.tbl, .funs, ...)
+- summarise_all(.tbl, .funs, ...)
+
+
+```{r, echo = TRUE}
+starwars %>% 
+  select(height, mass) %>% 
+  summarise_each(., 
+                 funs(mean(., na.rm = TRUE)))
+```
+
+
+## _at
+
+apply function(s) to specified columns
+
+- mutate_at(.tbl, .vars, .funs, ...)
+- summarise_at(.tbl, .vars, .funs, ...)
+
+```{r, echo = TRUE}
+starwars %>% 
+  summarise_at(., 
+               vars('height', 'mass'), 
+               funs(mean(., na.rm = TRUE)))
+```
+
+## _if
+
+apply to columns based on condition
+
+- mutate_if(.tbl, .predicate, .funs, ...)
+- summarise_if(.tbl, predicate, .funs, ...)
+
+```{r, echo = TRUE}
+starwars %>% 
+  summarise_if(., 
+               is.numeric, 
+               funs(mean(., na.rm = TRUE))) %>% 
+  select(height, mass)
+```
+
+## examples
+
+
+
+
+
+
