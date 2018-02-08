@@ -1,0 +1,200 @@
+---
+title: "Friendly Shell - Setting Up For Success"
+output: html_document
+---
+
+```{r setup, echo = FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+Often the Bash / Unix language is used as a base language for external programs or command-line tools. This makes Bash / Unix a really versatile environment to work in.
+
+However, to make the Bash / Unix shell really work for you (and be it's most versatile) there are some set-up steps that you'll want to learn.
+
+
+#### Step 1: Make a place to keep all your programs / tools
+
+This is primarily to keep your programs / tools organised so you can find them easily later & don't accidentally delete / edit them.
+
+```{bash make_executables_folder}
+
+mkdir ~/MyTools
+mkdir ~/MyTools/bin
+
+```
+
+We also made a `bin/` folder (this will make more sense later).
+
+
+#### Step 2: Download a program / tool
+
+This could be any tool, whatever it is you want to work with.
+
+Here are a few links that you can download some example programs / tools from:
+
+  + PLINK: https://www.cog-genomics.org/plink2
+  + PAML: http://abacus.gene.ucl.ac.uk/software/paml.html#download
+  + Samtools: http://www.htslib.org/download/
+
+
+#### Step 3: Make the tool accesible from anywhere
+
+We'll start with make PLINK work anywhere.
+
+  + Unzip the file you have just downloaded & move it to the `~/MyTools` directory you just made
+  
+```{bash unzip_plink}
+
+unzip ~/Downloads/plink_mac.zip -d ~/MyTools/PLINK
+ls ~/MyTools/PLINK
+
+```
+
+Inside the unzipped folders you will see two files that do not have a suffix:
+
+  + plink
+  + prettify
+  
+These are the files that run the PLINK program / tool.
+
+If we try to run these tools right now (from our home directory) they won't work.
+
+```{bash plink_not_work}
+
+plink
+
+```
+
+But if we specify the filepath they are in, they will work.
+
+```{bash plink_working}
+
+~/MyTools/PLINK/plink
+
+```
+
+How can we make these programs / tools work without having to specify the filepath? (Just like when we use `ls` , `head` , `cat`, etc.)
+
+#### Step 4: Make programs / tools accesible
+
+To set-up our computer to 'see' these programs / tools from anywhere we need to make a file called a `.bashrc`
+
+This file has instructions that Bash / Unix automatically reads when it is opened. It can have anything you want in it, but we'll start with our program / tools set-up before we move on to other cool things.
+
+When we run a program / tool in Bash / Unix our computer automatically searches through a bunch of 'default' filepaths for the background file that actually specifies what that command does.
+
+```{bash view_path}
+
+echo $PATH
+
+```
+
+We need to add to that 'default' path and add our folder full of tools.
+
+```{bash make_bashrc}
+
+nano ~/.bashrc
+
+```
+
+You want this file to be 'hidden', that is why we have added the . at the start of the file name. You also want it to be in your home directory so that Bash / Unix sees it at opening.
+
+```{bash inside_nano}
+
+PATH=${PATH}:/Users/tanyaflynn/MyTools/bin
+
+```
+
+```{bash use_bashrc}
+
+source ~/.bashrc
+
+echo $PATH
+
+```
+
+Now when we try to run a command our Bash / Unix will search through our own personal folder of programs / tools, as well as the 'default' filepaths.
+
+*BUT*
+
+We made our new `$PATH` point to `~/MyTools/bin/` , but we put or programs into their own PLINK folder. So how do we resolve this issue? Why did we make it to start with?
+
+If you have downloaded 20 different programs / tools, each to their own sub-folder in the `~/MyTools` folder you will have to update `$PATH` every time you add a new program (annoying) and your `$PATH` will end up being extremely long, repetitive, and untidy.
+
+Instead, we can use the `~/MyTools/bin` folder to keep all the actual programs / tools that we want to use in one place that only needs to be added to the `~/.bashrc` once.
+
+To do this we make symbolic links to our programs / tools that are saved in their own folders:
+
+```{bash symbolic_link}
+
+ln -s ~/MyTools/PLINK/plink ~/MyTools/bin/plink
+
+```
+
+This link also doesn't have to be named the same thing as the program, eg:
+
+```{bash symbolic_link2}
+
+ln -s ~/MyTools/PLINK/plink ~/MyTools/bin/plink-1.9
+
+```
+
+And now if we try to run plink without specifying where it is our computer should be able to find it.
+
+```{bash run_plink}
+
+plink-1.9
+
+```
+
+
+*ASIDE: Mac's Only*
+
+Mac's understand the `~/.bashrc` , but won't automatically load it when opening Terminal. To get around this we need to make one more link:
+
+```{bash bash_profile}
+
+ln -s ~/.bashrc ~/.bash_profile
+
+```
+
+
+### Other cool .bashrc commands / options
+
+#### Change automatic prompt symbol
+
+```{bash prompt_command}
+
+export PROMPT_COMMAND='if [ "$(id -u)" -ne 0 ];
+  then
+    PS1=$(basename $(pwd | tr " " "_"))\$\ ;
+  fi'
+
+```
+
+#### Save every command you run into a .log file
+
+```{bash save_history}
+
+export PROMPT_COMMAND='if [ "$(id -u)" -ne 0 ];
+  then
+    echo "$(date "+%Y-%m-%d.%H:%M:%S") $(hostname) $(pwd) $(history 1)" >> ~/Dropbox/.logs/bash-history-$(date "+%Y-%m-%d").log;
+  fi'
+
+```
+
+
+#### Make tab-complete case insensitive
+
+```{bash inputrc}
+# If ~./inputrc doesn't exist yet, first include the original /etc/inputrc so we don't override it
+if [ ! -a ~/.inputrc ];
+  then
+    echo '$include /etc/inputrc' > ~/.inputrc;
+  fi
+
+# Add option to ~/.inputrc to enable case-insensitive tab completion
+echo 'set completion-ignore-case On' >> ~/.inputrc
+```
+
+
